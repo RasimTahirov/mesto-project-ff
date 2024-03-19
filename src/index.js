@@ -267,8 +267,6 @@ function handleAvatarFormSubmit(event) {
   event.preventDefault();
   const newAvatarUrl = avatarUrlInput.value;
 
-
-  
   const saveButton = avatarForm.querySelector(".popup__button");
   saveButton.textContent = "Сохранение...";
 
