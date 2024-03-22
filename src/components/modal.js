@@ -1,5 +1,4 @@
 export { openPopup, closePopup, popups };
-import { nameInput, jobInput, nameElement, jobElement } from "../index.js";
 
 // Закрытие окна по esc
 function closeByEsc(evt) {
@@ -15,9 +14,6 @@ function closeByEsc(evt) {
 function openPopup(popup) {
   popup.classList.add("popup_is-opened");
   document.addEventListener("keydown", closeByEsc);
-
-  nameInput.value = nameElement.textContent;
-  jobInput.value = jobElement.textContent;
 }
 
 // Закрытие popup
@@ -37,13 +33,4 @@ popups.forEach((popup) => {
       closePopup(popup);
     }
   });
-});
-
-document.addEventListener("click", (evt) => {
-  if (evt.target.classList.contains("popup__button")) {
-    const popup = evt.target.closest(".popup");
-    if (popup) {
-      closePopup(popup);
-    }
-  }
 });

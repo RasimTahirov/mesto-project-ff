@@ -65,5 +65,5 @@ export const changeAvatar = (avatarUrl) => {
     method: "PATCH",
     headers: config.headers,
     body: JSON.stringify({ avatar: avatarUrl }),
-  });
+  }).then(checkResponse);
 };

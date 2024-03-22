@@ -1,6 +1,8 @@
-import { cardTemplate } from "../index.js";
+// import { cardTemplate } from "../index.js";
 export { createCard };
 import { deleteCard as apiDeleteCard, toggleLike as apiToggleLike } from "./api.js";
+
+const cardTemplate = document.querySelector("#card-template").content;
 
 // Функция создания карточки
 function createCard(card, openImageHandler, userId, deleteCallback) {
@@ -51,17 +53,22 @@ function toggleLike(cardId, likeBtn, likeCounter) {
       likeCounter.textContent = data.likes.length;
     })
     .catch((error) => {
-      console.error(`Ошибка ${isLiked ? "убирания лайка" : "постановки лайка"} карточке:`, error);
+      console.error(
+        `Ошибка ${isLiked ? "убирания лайка" : "постановки лайка"} карточке:`,
+        error
+      );
     });
 }
 
 // Функция удаления карточки
 function deleteCard(cardId, cardElement) {
-  apiDeleteCard(cardId) 
+  apiDeleteCard(cardId)
     .then(() => {
       cardElement.remove();
     })
     .catch((error) => {
-      console.error("Ошибка удаления карты:", error);
+      console.error("Ошибка:", error);
     });
 }
+
+export { cardTemplate };
