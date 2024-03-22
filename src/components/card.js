@@ -1,5 +1,6 @@
 import { cardTemplate } from "../index.js";
 export { createCard };
+import { deleteCard as apiDeleteCard, toggleLike as apiToggleLike } from "./api.js";
 
 // Функция создания карточки
 function createCard(card, openImageHandler, userId, deleteCallback) {
@@ -44,48 +45,20 @@ function createCard(card, openImageHandler, userId, deleteCallback) {
 // Функция постановки и снятия лайка на карточке
 function toggleLike(cardId, likeBtn, likeCounter) {
   const isLiked = likeBtn.classList.contains("card__like-button_is-active");
-  const method = isLiked ? "DELETE" : "PUT";
-
-  fetch(`https://nomoreparties.co/v1/wff-cohort-8/cards/likes/${cardId}`, {
-    method: method,
-    headers: {
-      authorization: "f0900dc3-fecd-4246-b516-514bd8cfc01c",
-    },
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(
-          `Не удалось ${isLiked ? "убрать лайк" : "поставить лайк"} карточке: ${
-            response.status
-          }`
-        );
-      }
-      return response.json();
-    })
+  apiToggleLike(cardId, isLiked)
     .then((data) => {
       likeBtn.classList.toggle("card__like-button_is-active");
       likeCounter.textContent = data.likes.length;
     })
     .catch((error) => {
-      console.error(
-        `Ошибка ${isLiked ? "убирания лайка" : "постановки лайка"} карточке:`,
-        error
-      );
+      console.error(`Ошибка ${isLiked ? "убирания лайка" : "постановки лайка"} карточке:`, error);
     });
 }
 
 // Функция удаления карточки
 function deleteCard(cardId, cardElement) {
-  fetch(`https://nomoreparties.co/v1/wff-cohort-8/cards/${cardId}`, {
-    method: "DELETE",
-    headers: {
-      authorization: "f0900dc3-fecd-4246-b516-514bd8cfc01c",
-    },
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`Не удалось удалить карту: ${response.status}`);
-      }
+  apiDeleteCard(cardId) 
+    .then(() => {
       cardElement.remove();
     })
     .catch((error) => {

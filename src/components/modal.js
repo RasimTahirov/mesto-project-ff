@@ -1,4 +1,4 @@
-export { openPopup, closePopup, closePopupOverlay };
+export { openPopup, closePopup, popups };
 import { nameInput, jobInput, nameElement, jobElement } from "../index.js";
 
 // Закрытие окна по esc
@@ -26,24 +26,24 @@ function closePopup(popup) {
   document.removeEventListener("keydown", closeByEsc);
 }
 
-// Закрытие по overlay
-function closePopupOverlay(evt) {
-  const popupContent = evt.target.closest(".popup__content");
-  if (!popupContent) {
+const popups = document.querySelectorAll(".popup");
+
+popups.forEach((popup) => {
+  popup.addEventListener("mousedown", (evt) => {
+    if (
+      evt.target.classList.contains("popup_is-opened") ||
+      evt.target.classList.contains("popup__close")
+    ) {
+      closePopup(popup);
+    }
+  });
+});
+
+document.addEventListener("click", (evt) => {
+  if (evt.target.classList.contains("popup__button")) {
     const popup = evt.target.closest(".popup");
     if (popup) {
       closePopup(popup);
     }
   }
-}
-
-const closeBtn = document.querySelectorAll(".popup__close");
-
-closeBtn.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const popup = btn.closest(".popup");
-    if (popup) {
-      closePopup(popup);
-    }
-  });
 });

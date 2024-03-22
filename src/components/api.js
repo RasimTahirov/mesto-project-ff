@@ -5,29 +5,20 @@ const config = {
     "Content-Type": "application/json",
   },
 };
+import { checkResponse } from "./utils";
 
 // Функция загрузки информации о пользователе
 export const getUserInfo = () => {
   return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers,
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse);
 };
 
 // Функция загрузки карточек
 export const getInitialCards = () => {
   return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers,
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse);
 };
 
 // Функция обновления данных профиля пользователя
@@ -39,12 +30,7 @@ export const updateUserProfile = (name, about) => {
       name: name,
       about: about,
     }),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse);
 };
 
 // Функция добавления новой карточки
@@ -53,12 +39,7 @@ export const addCard = (newCard) => {
     method: "POST",
     headers: config.headers,
     body: JSON.stringify(newCard),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse);
 };
 
 // Функция удаления карточки
@@ -66,11 +47,7 @@ export const deleteCard = (cardId) => {
   return fetch(`${config.baseUrl}/cards/${cardId}`, {
     method: "DELETE",
     headers: config.headers,
-  }).then((res) => {
-    if (!res.ok) {
-      return Promise.reject(`Ошибка: ${res.status}`);
-    }
-  });
+  }).then(checkResponse);
 };
 
 // Функция изменения статуса лайка на карточке
@@ -79,12 +56,7 @@ export const toggleLike = (cardId, isLiked) => {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: method,
     headers: config.headers,
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse);
 };
 
 // Функция обновления аватара пользователя
@@ -93,9 +65,5 @@ export const changeAvatar = (avatarUrl) => {
     method: "PATCH",
     headers: config.headers,
     body: JSON.stringify({ avatar: avatarUrl }),
-  }).then((res) => {
-    if (!res.ok) {
-      return Promise.reject(`Ошибка: ${res.status}`);
-    }
   });
 };
