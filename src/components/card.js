@@ -1,6 +1,9 @@
 // import { cardTemplate } from "../index.js";
 export { createCard };
-import { deleteCard as apiDeleteCard, toggleLike as apiToggleLike } from "./api.js";
+import {
+  deleteCard as apiDeleteCard,
+  toggleLike as apiToggleLike,
+} from "./api.js";
 
 const cardTemplate = document.querySelector("#card-template").content;
 
@@ -21,15 +24,15 @@ function createCard(card, openImageHandler, userId, deleteCallback) {
     openImageHandler(card.link, card.name, card.name);
   });
 
-  deleteButton.addEventListener("click", () => {
-    deleteCard(card._id, cardElement);
-  });
-
   if (card.owner._id === userId) {
     deleteButton.style.display = "block";
   } else {
     deleteButton.style.display = "none";
   }
+
+  deleteButton.addEventListener("click", () => {
+    deleteCard(card._id, cardElement);
+  });
 
   if (card.likes.some((like) => like._id === userId)) {
     likeBtn.classList.add("card__like-button_is-active");

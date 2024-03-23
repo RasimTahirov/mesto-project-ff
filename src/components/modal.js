@@ -1,4 +1,5 @@
-export { openPopup, closePopup, popups };
+export { openPopup, closePopup };
+import { setPopupListeners } from "../index.js";
 
 // Закрытие окна по esc
 function closeByEsc(evt) {
@@ -22,15 +23,19 @@ function closePopup(popup) {
   document.removeEventListener("keydown", closeByEsc);
 }
 
-const popups = document.querySelectorAll(".popup");
-
-popups.forEach((popup) => {
-  popup.addEventListener("mousedown", (evt) => {
-    if (
-      evt.target.classList.contains("popup_is-opened") ||
-      evt.target.classList.contains("popup__close")
-    ) {
-      closePopup(popup);
-    }
-  });
+window.addEventListener("DOMContentLoaded", () => {
+  setPopupListeners(); // Вызов после загрузки DOM
 });
+
+// const popups = document.querySelectorAll(".popup");
+
+// popups.forEach((popup) => {
+//   popup.addEventListener("mousedown", (evt) => {
+//     if (
+//       evt.target.classList.contains("popup_is-opened") ||
+//       evt.target.classList.contains("popup__close")
+//     ) {
+//       closePopup(popup);
+//     }
+//   });
+// });

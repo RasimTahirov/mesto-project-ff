@@ -106,4 +106,28 @@ function clearValidation(
   buttonElement.disabled = true;
 }
 
-export { enableValidation, clearValidation };
+
+
+const newPlaceForm = document.querySelector(".popup__form[name='new-place']");
+const newCardNameInput = newPlaceForm.querySelector(".popup__input_type_card-name");
+const newCardLinkInput = newPlaceForm.querySelector(".popup__input_type_url");
+const saveButton = newPlaceForm.querySelector(".popup__button");
+
+// Инициализируем кнопку как заблокированную
+saveButton.disabled = true;
+
+newCardNameInput.addEventListener("input", validateButtonState);
+newCardLinkInput.addEventListener("input", validateButtonState);
+
+function validateButtonState() {
+  // Проверяем, заполнены ли оба поля
+  if (newCardNameInput.value && newCardLinkInput.value) {
+    saveButton.disabled = false;
+  } else {
+    saveButton.disabled = true;
+  }
+}
+
+export { enableValidation, clearValidation, validateButtonState };
+
+
