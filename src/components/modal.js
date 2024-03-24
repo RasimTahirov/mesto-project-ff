@@ -1,5 +1,5 @@
 export { openPopup, closePopup };
-import { setPopupListeners } from "../index.js";
+// import { setPopupListeners } from "../index.js";
 
 // Закрытие окна по esc
 function closeByEsc(evt) {
@@ -23,9 +23,9 @@ function closePopup(popup) {
   document.removeEventListener("keydown", closeByEsc);
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-  setPopupListeners(); // Вызов после загрузки DOM
-});
+// window.addEventListener("DOMContentLoaded", () => {
+//   setPopupListeners(); // Вызов после загрузки DOM
+// });
 
 // const popups = document.querySelectorAll(".popup");
 

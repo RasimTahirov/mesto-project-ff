@@ -47,7 +47,11 @@ function setPopupListeners() {
   });
 }
 
-export { setPopupListeners };
+window.addEventListener("DOMContentLoaded", () => {
+  setPopupListeners(); // Вызов после загрузки DOM
+});
+
+// export { setPopupListeners };
 
 // Открытие и закрытие модального окна
 const buttonOpenPopupProfile = document.querySelector(".profile__edit-button");
@@ -56,11 +60,15 @@ const popupEdit = document.querySelector(".popup_type_edit");
 const popupNewCard = document.querySelector(".popup_type_new-card");
 
 buttonOpenPopupProfile.addEventListener("click", () => {
-  getUserInfo().then((userData) => {
-    nameInput.value = userData.name;
-    jobInput.value = userData.about;
-    openPopup(popupEdit);
-  });
+  getUserInfo()
+    .then((userData) => {
+      nameInput.value = userData.name;
+      jobInput.value = userData.about;
+      openPopup(popupEdit);
+    })
+    .catch((error) => {
+      console.error("Ошибка:", error);
+    });
 });
 buttonOpenPopupNewCard.addEventListener("click", () => openPopup(popupNewCard));
 
